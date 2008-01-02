@@ -10,6 +10,7 @@ License: LGPL
 Source: http://www.haskell.org/HaXml/%{module}-%{version}.tar.bz2
 BuildRequires: ghc
 BuildRequires: haddock
+BuildRoot: %_tmppath/%name-%version-%release-root
 Requires(post): ghc
 Requires(preun): ghc
 

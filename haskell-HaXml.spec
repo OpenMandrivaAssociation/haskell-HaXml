@@ -2,7 +2,7 @@
 
 Name: haskell-%{module}
 Version: 1.13.2
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: A library to parse/write XML files
 Url: http://www.cs.york.ac.uk/fp/HaXml
 Group: Development/Other

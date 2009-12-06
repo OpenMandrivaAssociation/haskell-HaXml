@@ -11,6 +11,7 @@ Source: http://hackage.haskell.org/packages/archive/%{module}/%{version}/%{modul
 BuildRequires: ghc
 BuildRequires: haddock
 BuildRequires: haskell(polyparse) >= 1.2
+BuildRequires: haskell-macros
 BuildRoot: %_tmppath/%name-%version-%release-root
 
 %description

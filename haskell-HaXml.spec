@@ -1,18 +1,17 @@
 %define module HaXml
 
 Name: haskell-%{module}
-Version: 1.13.2
-Release: %mkrel 4
+Version: 1.20
+Release: %mkrel 1
 Summary: A library to parse/write XML files
 Url: http://www.cs.york.ac.uk/fp/HaXml
 Group: Development/Other
 License: LGPL
-Source: http://www.haskell.org/HaXml/%{module}-%{version}.tar.bz2
+Source: http://hackage.haskell.org/packages/archive/%{module}/%{version}/%{module}-%{version}.tar.gz
 BuildRequires: ghc
 BuildRequires: haddock
+BuildRequires: haskell(polyparse) >= 1.2
 BuildRoot: %_tmppath/%name-%version-%release-root
-Requires(post): ghc
-Requires(preun): ghc
 
 %description
 Haskell utilities for parsing, filtering, transforming and
@@ -22,34 +21,28 @@ generating XML documents.
 %setup -q -n %{module}-%{version}
 
 %build
-runhaskell Setup.hs configure --prefix=%{_prefix}
-runhaskell Setup.hs build
-runhaskell Setup.hs haddock
+%_cabal_build
 
-runhaskell Setup.hs   register --gen-script
-runhaskell Setup.hs unregister --gen-script
-
-%install
-runhaskell Setup.hs copy --destdir=%{buildroot}
-
-rm -fr %{buildroot}%{_datadir}/%{module}-%{version}/doc
+%_cabal_genscripts
 
 %check
-runhaskell Setup.hs test
+%_cabal_check
 
-%post -f register.sh
+%install
+%_cabal_install
 
-%preun -f unregister.sh
+rm -fr %{buildroot}/%_datadir/*/doc/
+
+%_cabal_rpm_gen_deps
+
+%_cabal_scriptlets
 
 %files
 %defattr(-,root,root)
-%doc dist/doc/html
-%doc README
 %_libdir/%{module}-%{version}
+%{_docdir}/%{module}-%{version}
 %_bindir/*
+%_cabal_rpm_files
 
 %clean
 rm -fr %buildroot
-
-
-

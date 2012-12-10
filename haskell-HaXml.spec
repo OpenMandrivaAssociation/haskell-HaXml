@@ -1,22 +1,26 @@
+#% global debug_package %{nil}
+#% define _cabal_setup Setup.lhs
+#% define _no_haddock 1
 %define module HaXml
+Name:           haskell-%{module}
+Version:        1.23.3
+Release:        1
+Summary:        Utilities for manipulating XML documents
+Group:          Development/Other
+License:        LGPL
+URL:            http://hackage.haskell.org/package/%{module}
+Source0:        http://hackage.haskell.org/packages/archive/%{module}/%{version}/%{module}-%{version}.tar.gz
 
-Name: haskell-%{module}
-Version: 1.20
-Release: %mkrel 3
-Summary: A library to parse/write XML files
-Url: http://www.cs.york.ac.uk/fp/HaXml
-Group: Development/Other
-License: LGPL
-Source: http://hackage.haskell.org/packages/archive/%{module}/%{version}/%{module}-%{version}.tar.gz
-BuildRequires: ghc
-BuildRequires: haddock
-BuildRequires: haskell(polyparse) >= 1.2
-BuildRequires: haskell-macros
-BuildRoot: %_tmppath/%name-%version-%release-root
+BuildRequires:  ghc, ghc-devel, haskell-macros, haddock
+buildrequires:  haskell(polyparse)
+buildrequires:  haskell(random)
+Requires(pre):  ghc
+requires(pre):  haskell(polyparse)
+requires(pre):  haskell(random)
 
 %description
-Haskell utilities for parsing, filtering, transforming and
-generating XML documents.
+Haskell utilities for parsing, filtering, transforming and generating XML
+documents.
 
 %prep
 %setup -q -n %{module}-%{version}
@@ -24,26 +28,21 @@ generating XML documents.
 %build
 %_cabal_build
 
-%_cabal_genscripts
+%install
+%_cabal_install
+%_cabal_rpm_gen_deps
+%_cabal_scriptlets
 
 %check
 %_cabal_check
 
-%install
-%_cabal_install
-
-rm -fr %{buildroot}/%_datadir/*/doc/
-
-%_cabal_rpm_gen_deps
-
-%_cabal_scriptlets
-
 %files
-%defattr(-,root,root)
-%_libdir/%{module}-%{version}
+%defattr(-,root,root,-)
 %{_docdir}/%{module}-%{version}
-%_bindir/*
-%_cabal_rpm_files
+%{_libdir}/%{module}-%{version}
+%_cabal_rpm_deps_dir
+%_cabal_haddoc_files
+%{_bindir}/*
 
-%clean
-rm -fr %buildroot
+
+

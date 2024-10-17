@@ -8,7 +8,7 @@ Release:        1
 Summary:        Utilities for manipulating XML documents
 Group:          Development/Other
 License:        LGPL
-URL:            http://hackage.haskell.org/package/%{module}
+URL:            https://hackage.haskell.org/package/%{module}
 Source0:        http://hackage.haskell.org/packages/archive/%{module}/%{version}/%{module}-%{version}.tar.gz
 
 BuildRequires:  ghc, ghc-devel, haskell-macros, haddock
